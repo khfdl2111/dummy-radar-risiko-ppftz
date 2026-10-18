@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radar Risiko PPFTZ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+        <circle cx="18" cy="18" r="16" fill="none" stroke="#B9D3DA" stroke-width="1.5" opacity="0.5"></circle>
+        <circle cx="18" cy="18" r="10" fill="none" stroke="#B9D3DA" stroke-width="1.5" opacity="0.7"></circle>
+        <path d="M18 18 L18 2 A16 16 0 0 1 31.9 10 Z" fill="#F2A541" opacity="0.85"></path>
+        <circle cx="18" cy="18" r="2.5" fill="#FFFFFF"></circle>
+      </svg>
+      <h1>Radar Risiko PPFTZ</h1>
+    </div>
+    <span class="tag">Prototipe · data dummy</span>
+    <p class="lede">Lima dimensi risiko dinilai untuk tiap dokumen, masing-masing 0 sampai 100. Kelimanya digabung menjadi satu skor, lalu petugas yang memutuskan dan menindaklanjuti sampai selesai. Semua dokumen dan pelaku usaha di halaman ini fiktif.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <main>
+    <div class="tabs" role="tablist" aria-label="Bagian aplikasi">
+      <button role="tab" id="tab-kerangka" aria-controls="panel-kerangka" aria-selected="true">Kerangka dan lima dimensi</button>
+      <button role="tab" id="tab-daftar" aria-controls="panel-daftar" aria-selected="false">Daftar prioritas</button>
+      <button role="tab" id="tab-coba" aria-controls="panel-coba" aria-selected="false">Coba hitung</button>
+    </div>
+
+    <div class="panel" id="panel-kerangka" role="tabpanel" aria-labelledby="tab-kerangka">
+      <h2 class="judul-bagian">Dari data sampai keputusan</h2>
+      <div class="kerangka" id="diagram"></div>
+      <h2 class="judul-bagian" style="margin-top:8px">Lima dimensi dan indikatornya</h2>
+      <p class="pengantar">Tiap dimensi menjawab satu pertanyaan. Skornya adalah jumlah poin dari beberapa indikator, paling tinggi 100. Semakin kuat tandanya, semakin banyak poinnya.</p>
+      <div class="dimkartu" id="dimkartu"></div>
+    </div>
+
+    <div class="panel" id="panel-daftar" role="tabpanel" aria-labelledby="tab-daftar" hidden>
+      <div class="ringkas" id="ringkas"></div>
+      <div class="subbar">
+        <div class="submenu" id="submenu" role="tablist" aria-label="Submenu daftar prioritas"></div>
+        <span class="kabar" id="kabar" role="status" aria-live="polite" hidden></span>
+      </div>
+      <p class="pengantar" id="sub-ket" hidden></p>
+      <div class="filter">
+        <label for="f-proses">Proses bisnis<select id="f-proses"></select></label>
+        <label for="f-prio">Prioritas<select id="f-prio"><option value="">Semua</option><option>Tinggi</option><option>Sedang</option><option>Rendah</option></select></label>
+        <label for="f-risiko">Risiko utama<select id="f-risiko"></select></label>
+        <label for="f-status" id="l-status">Keputusan<select id="f-status"><option value="">Semua</option><option value="belum">Belum diputuskan</option><option value="sudah">Sudah diputuskan</option></select></label>
+        <label for="f-urut">Urutkan menurut<select id="f-urut"></select></label>
+        <label for="f-cari">Cari<input type="search" id="f-cari" placeholder="Nomor, pelaku, atau HS"></label>
+        <label class="cek" for="f-kunci"><input type="checkbox" id="f-kunci"> Tampilkan kunci simulasi</label>
+        <span class="jml" id="jml"></span>
+      </div>
+      <div class="meja">
+        <div class="kotak">
+          <div class="gulir"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+          <div class="lagi" id="lagi"></div>
+        </div>
+        <aside class="kotak kartu" id="kartu" aria-live="polite"></aside>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-coba" role="tabpanel" aria-labelledby="tab-coba" hidden>
+      <div class="kotak isi-kotak">
+        <h2>Kalkulator skor</h2>
+        <p>Geser skor tiap dimensi dan lihat bagaimana skor terintegrasi dan prioritasnya terbentuk. Kalkulator ini tidak mengubah data.</p>
+        <div class="kalk">
+          <div id="k-geser" style="display:grid;gap:12px"></div>
+          <div><div class="skorbesar" id="k-besar"></div><div class="hitung" id="k-hitung"></div></div>
+        </div>
+      </div>
+      <div class="tiga">
+        <div class="kotak isi-kotak">
+          <h2>Pengaturan penggabungan</h2>
+          <p>Pengaturan ini berlaku untuk semua dokumen di Daftar prioritas.</p>
+          <div class="geser"><label for="b-porsi">Porsi dimensi tertinggi <span>sisanya untuk rata-rata lima dimensi</span></label><input type="range" id="b-porsi" min="0" max="100" step="5"><output class="num" id="b-porsi-out" for="b-porsi"></output></div>
+          <div id="geser" style="display:grid;gap:12px"></div>
+          <div class="sebar" id="sebar"></div>
+          <div><button class="btn" id="b-reset" type="button">Kembalikan pengaturan awal</button></div>
+        </div>
+        <div class="kotak isi-kotak">
+          <h2>Simulasi: berapa kasus tertangkap?</h2>
+          <p id="eval-ket"></p>
+          <div class="geser"><label for="e-n">Jumlah dokumen yang diperiksa</label><input type="range" id="e-n" min="10" max="100" step="5" value="30"><output class="num" id="e-n-out" for="e-n"></output></div>
+          <div class="batang" id="batang"></div>
+          <p class="ket">Kasus disisipkan sendiri ke data dummy, jadi angka ini hanya memperlihatkan cara mengukur. Ini bukan bukti kinerja pada data sebenarnya.</p>
+        </div>
+      </div>
+      <div class="kotak isi-kotak">
+        <h2>Umpan balik petugas</h2>
+        <p>Setiap keputusan dan hasil tindak lanjutnya menjadi label. Label inilah yang kelak dipakai melatih model dan menyesuaikan bobot. Beberapa keputusan contoh sudah diisikan supaya alurnya terlihat.</p>
+        <div class="gulir"><table><thead><tr><th>Dokumen</th><th>Prioritas</th><th>Risiko utama</th><th>Keputusan</th><th>Status</th><th>Catatan</th></tr></thead><tbody id="log"></tbody></table></div>
+        <div id="log-aksi"></div>
+      </div>
+    </div>
+  </main>
+  <footer>Prototipe konsep untuk paper "Strengthening Customs Vigilance through Artificial Intelligence". Bukan sistem resmi. Tarif, skema FTA, status lartas, dan harga pembanding adalah angka ilustrasi.</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script src="js/core.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>

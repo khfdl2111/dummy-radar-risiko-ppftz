@@ -1,0 +1,9 @@
+{
+  "name": "radar-risiko-ppftz",
+  "version": "1.0.0",
+  "description": "Prototipe skor risiko lima dimensi untuk dokumen PPFTZ (data dummy)",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  }
+}
